@@ -1,2 +1,2 @@
 # NADAR
-A Natural Disaster Activity Radar made with Python
+A real-time NAtural Disaster Activity Radar made with Python and GDCAS api.
