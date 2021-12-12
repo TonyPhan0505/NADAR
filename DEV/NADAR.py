@@ -776,7 +776,7 @@ def main():
 
 	all_active_hazards_title.place(x = 18, y = 15)
 
-	back_to_dashboard_button = Button(show_more_disasters_frame, text = "Back to Dashboard", highlightbackground = "black", bg = "white", fg = "black", width = 12, height = 2, command = press_dashboard)
+	back_to_dashboard_button = Button(show_more_disasters_frame, text = "Dashboard", highlightbackground = "black", bg = "white", fg = "black", width = 12, height = 2, command = press_dashboard)
 
 	back_to_dashboard_button.place(x = 1040, y = 15)
 
