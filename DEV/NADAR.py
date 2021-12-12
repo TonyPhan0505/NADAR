@@ -1090,7 +1090,7 @@ def main():
 
 	def open_earthquake_guide():
 
-		os.system("open " + path + "Media/earthquake.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	earthquake_guidance_button = Button(guidance_frame, text = "Earthquakes Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_earthquake_guide)
 
@@ -1098,7 +1098,7 @@ def main():
 
 	def open_cyclone_guide():
 
-		os.system("open " + path + "Media/storm.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	cylones_guidance_button = Button(guidance_frame, text = "Cyclones Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_cyclone_guide)
 
@@ -1106,7 +1106,7 @@ def main():
 
 	def open_flood_guide():
 
-		os.system("open " + path + "Media/flood.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	floods_guidance_button = Button(guidance_frame, text = "Floods Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_flood_guide)
 
@@ -1114,7 +1114,7 @@ def main():
 
 	def open_volcano_guide():
 
-		os.system("open " + path + "Media/retrofitting.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	volcanoes_guidance_button = Button(guidance_frame, text = "Volcanoes Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_volcano_guide)
 
@@ -1122,7 +1122,7 @@ def main():
 
 	def open_drought_guide():
 
-		os.system("open " + path + "Media/drought.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	droughts_guidance_button = Button(guidance_frame, text = "Droughts Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_drought_guide)
 
@@ -1130,7 +1130,7 @@ def main():
 
 	def open_fire_guide():
 
-		os.system("open " + path + "Media/fire.pdf")
+		webbrowser.open_new("https://www.fema.gov/flood-maps/products-tools/know-your-risk/homeowners-renters/protect-property")
 
 	forestfires_guidance_button = Button(guidance_frame, text = "Forest Fires Guide", width = 30, height = 10, highlightbackground = "black", bg = "white", fg = "black", command = open_fire_guide)
 
