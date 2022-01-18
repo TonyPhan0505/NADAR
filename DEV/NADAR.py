@@ -42,16 +42,16 @@ def all_hazards():
 	return disasters
 
 def find_most_dangerous():
-	pass
+	pass  # Currently being updated
 
 def find_hazards_percentages():
-	pass
+	pass  # Currently being updated
 
 def time_series():
-	pass
+	pass  # Currently being updated
 
 def continents_stats():
-	pass
+	pass # Currently being updated
 
 def hazards_by_categories():
 
