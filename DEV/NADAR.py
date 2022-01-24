@@ -9,9 +9,18 @@ import requests
 import webbrowser
 import folium
 from googlesearch import search
+import matplotlib.pyplot as plt
+
+# Directory of exe file
+path = str(os.path.dirname(os.path.realpath(__file__))) + "/"
+
+#### Main window ####
+root = Tk()
+root.title("NADAR")
+root.geometry("1220x650")
+root.resizable(0,0)
 
 def all_hazards():
-
 	disasters = []
 	main_api = "https://gdacs.org/xml/gdacs_archive.geojson"
 	json_data = requests.get(main_api).json()
@@ -41,20 +50,86 @@ def all_hazards():
 
 	return disasters
 
-def find_most_dangerous():
-	pass  # Currently being updated
+def show_most_dangerous():
+	def find_most_dangerous():
+		all_cyclones = hazards_by_categories()['cyclone']
+		all_volcanoes = hazards_by_categories()['volcano']
+		all_earthquakes = hazards_by_categories()['earthquake']
+		all_floods = hazards_by_categories()['flood']
+		all_fires = hazards_by_categories()['fire']
+		all_droughts = hazards_by_categories()['drought']
 
-def find_hazards_percentages():
-	pass  # Currently being updated
+		all_disasters = [all_cyclones, all_volcanoes, all_earthquakes, all_floods, all_fires, all_droughts]
+		most_dangerous_disasters = [
+			['Cyclone', "", "", ""], 
+			['Volcano', "", "", ""], 
+			['Earthquake', "", "", ""], 
+			['Flood', "", "", ""], 
+			['Fire', "", "", ""], 
+			['Drought', "", "", ""]
+			]
+
+		for i in range(len(all_disasters)):
+			disasters = all_disasters[i]
+			max_severity = 0
+			most_dangerous_disaster = ""
+			for disaster in disasters:
+				severity = int(list(disaster.values())[0]['severity'])
+				severity_unit = list(disaster.values())[0]['severity_unit']
+				if severity > max_severity:
+					max_severity = severity
+					most_dangerous_disaster = list(disaster.keys())[0]
+			if most_dangerous_disaster and max_severity and severity_unit:
+				most_dangerous_disasters[i][1] = most_dangerous_disaster
+				most_dangerous_disasters[i][2] = max_severity
+				most_dangerous_disasters[i][3] = severity_unit
+
+		return most_dangerous_disasters
+	
+	screen = Toplevel(root)
+	screen.title("Most Dangerous")
+	screen.geometry("800x500")
+	most_dangerous_disasters = find_most_dangerous()
+	y = 60
+	for i in range(len(most_dangerous_disasters)):
+		kind = most_dangerous_disasters[i]
+		disaster = kind[0]
+		disaster_name = kind[1]
+		disaster_severity = kind[2]
+		disaster_unit = kind[3]
+		cyclone_title = Label(screen, text = f"{i+1}. {disaster}, {disaster_name[:-1]}, {disaster_severity} {disaster_unit}", font = ("Bold Avenir", 12))
+		cyclone_title.place(x = 60, y = y)
+		y += 65
+	screen.mainloop()
+
+def show_hazards_percentages():
+	def find_hazards_percentages():
+		total_number_of_disasters = len(all_hazards())
+		percentage_of_cyclones = round(len(hazards_by_categories()['cyclone']) / total_number_of_disasters * 100, 1)
+		percentage_of_volcanoes = round(len(hazards_by_categories()['volcano']) / total_number_of_disasters * 100, 1)
+		percentage_of_earthquakes = round(len(hazards_by_categories()['earthquake']) / total_number_of_disasters * 100, 1)
+		percentage_of_floods = round(len(hazards_by_categories()['flood']) / total_number_of_disasters * 100, 1)
+		percentage_of_fires = round(len(hazards_by_categories()['fire']) / total_number_of_disasters * 100, 1)
+		percentage_of_droughts = round(len(hazards_by_categories()['drought']) / total_number_of_disasters * 100, 1)
+		hazards_percentages = [['Cyclone', percentage_of_cyclones], ['Volcano', percentage_of_volcanoes], ['Earthquake', percentage_of_earthquakes], ['Flood', percentage_of_floods], ['Fire', percentage_of_fires], ['Drought', percentage_of_droughts]]
+		return hazards_percentages
+
+	hazards_percentages = find_hazards_percentages()
+	labels = [i[0] for i in hazards_percentages]
+	sizes = [i[1] for i in hazards_percentages]
+	fig1, ax1 = plt.subplots()
+	ax1.pie(sizes, explode=None, labels=labels, autopct='%1.1f%%',
+		shadow=True, startangle=90)
+	ax1.axis('equal')
+	plt.show()
 
 def time_series():
-	pass  # Currently being updated
+	pass
 
 def continents_stats():
-	pass # Currently being updated
+	pass
 
 def hazards_by_categories():
-
 	disasters = all_hazards()
 	earthquakes = []
 	cylones = []
@@ -193,22 +268,6 @@ def detailed_reports():
 
 
 ####################################################################################
-
-# Directory of exe file
-
-path = str(os.path.dirname(os.path.realpath(__file__))) + "/"
-
-
-#### Main window ####
-
-root = Tk()
-root.title("NADAR")
-root.geometry("1220x650")
-root.resizable(0,0)
-
-#####################
-
-
 #### Frames handling ####
 
 # Pile frames
@@ -216,7 +275,6 @@ root.resizable(0,0)
 def press_signup():
 	hide_all_frames()
 	signup_frame.pack(fill = "both", expand = 1)
-
 
 def welcome_frame():
 	hide_all_frames()
@@ -234,10 +292,8 @@ def welcome_frame():
 			interests_info.config(text = f"Interests: {record[1]}")
 			break
 
-
 def lock_frame_error_message():
 	messagebox.showinfo("ERROR","Sorry, your username is not found.")
-
 
 def press_dashboard():
 	hide_all_frames()
@@ -453,9 +509,9 @@ show_map_button = Button(dashboard_frame, text = "Show Map", width = 10, height 
 show_map_button.place(x = 146, y = 72)
 refresh_button = Button(dashboard_frame, text = "Refresh", width = 10, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = press_dashboard)
 refresh_button.place(x = 260, y = 72)
-find_most_dangerous_button = Button(dashboard_frame, text = "Most Dangerous", width = 15, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = find_most_dangerous)
+find_most_dangerous_button = Button(dashboard_frame, text = "Most Dangerous", width = 15, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = show_most_dangerous)
 find_most_dangerous_button.place(x = 374, y = 72)
-find_hazards_percentages_button = Button(dashboard_frame, text = "Hazards Percentages", width = 18, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = find_hazards_percentages)
+find_hazards_percentages_button = Button(dashboard_frame, text = "Hazards Percentages", width = 18, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = show_hazards_percentages)
 find_hazards_percentages_button.place(x = 538, y = 72)
 time_series_button = Button(dashboard_frame, text = "Time Series", width = 15, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = time_series)
 time_series_button.place(x = 726, y = 72)
