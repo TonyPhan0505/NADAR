@@ -47,7 +47,6 @@ def all_hazards():
 
 		disaster[description] = details
 		disasters.append(disaster)
-
 	return disasters
 
 def show_most_dangerous():
@@ -123,11 +122,44 @@ def show_hazards_percentages():
 	ax1.axis('equal')
 	plt.show()
 
-def time_series():
-	pass
+def show_time_series():
+	def time_series():
+		all_disasters = all_hazards()
+		calendar = {}
+		for disaster in all_disasters:
+			happened_on = int(list(disaster.values())[0]['from_date'][5:7])
+			if happened_on in calendar:
+				calendar[happened_on] += 1
+			else:
+				calendar[happened_on] = 1
+		return calendar
+	x = list(time_series().keys())
+	y = list(time_series().values())
+	plt.stem(x,y)
+	plt.xlabel("Months in 2 recent years")
+	plt.ylabel("Number of Disasters")
+	plt.show()
 
-def continents_stats():
-	pass
+def show_countries_stats():
+	def countries_stats():
+		all_disasters = all_hazards()
+		records_book = {}
+		for disaster in all_disasters:
+			countries = list(disaster.values())[0]['countries'].split(", ")
+			for country in countries:
+				if country in records_book:
+					records_book[country] += 1
+				else:
+					records_book[country] = 1
+		return records_book
+	
+	with open(path+"countries_stats.txt", "w") as f:
+		data = countries_stats().items()
+		for d in data:
+			f.write(f"{d[0]}: {d[1]}\n")
+		f.close()
+	time.sleep(1)
+	os.system("open countries_stats.txt")
 
 def hazards_by_categories():
 	disasters = all_hazards()
@@ -354,8 +386,7 @@ def press_lock_frame():
 
 
 def press_guidance():
-	hide_all_frames()
-	guidance_frame.pack(fill = "both", expand = 1)
+	webbrowser.open_new("https://www.cdc.gov/disasters/index.html")
 
 def press_social_media():
 	hide_all_frames()
@@ -513,10 +544,10 @@ find_most_dangerous_button = Button(dashboard_frame, text = "Most Dangerous", wi
 find_most_dangerous_button.place(x = 374, y = 72)
 find_hazards_percentages_button = Button(dashboard_frame, text = "Hazards Percentages", width = 18, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = show_hazards_percentages)
 find_hazards_percentages_button.place(x = 538, y = 72)
-time_series_button = Button(dashboard_frame, text = "Time Series", width = 15, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = time_series)
+time_series_button = Button(dashboard_frame, text = "Time Series", width = 15, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = show_time_series)
 time_series_button.place(x = 726, y = 72)
-continents_stats_button = Button(dashboard_frame, text = "Continents Stats", width = 18, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = continents_stats)
-continents_stats_button.place(x = 896, y = 72)
+countries_stats_button = Button(dashboard_frame, text = "Countries Stats", width = 18, height = 2, highlightbackground = "black", bg = "black", fg = "white", command = show_countries_stats)
+countries_stats_button.place(x = 896, y = 72)
 horizontal_separator_canva = Canvas(dashboard_frame, width = 1030, height = 2, bg = "black")
 horizontal_separator_canva.place(x = 146, y = 140)
 country_title = Label(dashboard_frame, text = "Country:", font = ("Avenir", 20))
