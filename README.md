@@ -1,5 +1,6 @@
 # NADAR
 A real-time NAtural Disaster Activity Radar made with Python and GDCAS api.
+#### Status: completed.
 
 # Run the app
 Cd into the directory with the file NADAR.py and enter the following command into the terminal:
