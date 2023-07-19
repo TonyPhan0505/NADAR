@@ -7,7 +7,7 @@ Cd into the directory with the file NADAR.py and enter the following command int
 ### `python3 NADAR.py`
 
 # Overview
-#### 1. Landing:
+#### 1. Landing page:
 <img width="1439" alt="Screenshot 2023-07-19 at 12 00 58 PM" src="https://github.com/TonyPhan0505/NADAR/assets/87828913/72161af3-2600-4813-b1af-f16f886ff88e">
 
 #### 2. Welcome:
