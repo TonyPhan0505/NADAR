@@ -695,7 +695,7 @@ else:
 cylones_title = Label(show_more_disasters_frame, text = f"Cyclones ({len(top_cylones)})", font = ("Avenir",16))
 cylones_title.place(x = 215, y = 90)
 cyclones_movement_tracker_button = Button(show_more_disasters_frame, text = "Track", highlightbackground = "black", bg = "black", fg = "white", width = 8, height = 2, command = draw_cyclones)
-cyclones_movement_tracker_button.place(x = 315, y = 83)
+cyclones_movement_tracker_button.place(x = 315, y = 15)
 cylones_canva = Canvas(show_more_disasters_frame, bg = "gray90", width = 200, height = 510)
 cylones_canva.place(x = 215, y = 120)
 v = 5
